@@ -247,7 +247,7 @@ namespace AddressBook_Workshop
                         ViewContact();
                         break;
                     case 5:
-                        SortingContactDetails();
+                        SortData();
                         break;
                     case 6:
                         flag = false;
@@ -382,16 +382,46 @@ namespace AddressBook_Workshop
         /// <summary>
         /// Sortings the contact details.
         /// </summary>
-        public void SortingContactDetails()
+        public List<Contact> SortingContactDetails()
         {
-            contactList.Sort((contact1, contact2) => contact1.FirstName.CompareTo(contact2.FirstName));
-            contactList.Sort((contact1, contact2) => contact1.LastName.CompareTo(contact2.LastName));
+            Console.WriteLine("Please press 1 to sort the data by name");
+            Console.WriteLine("Please press 2 to sort the data by city");
+            Console.WriteLine("Please press 3 to sort the data by state");
+            Console.WriteLine("Please press 4 to sort the data by zip");
+            Console.WriteLine("Please press any other to return the unsorted contacts");
+            int sortingContacts = Convert.ToInt32(Console.ReadLine());
 
-            foreach (var contacts in contactList)
+            switch (sortingContacts)
+            {
+                case 1:
+                    contactList.Sort((contact1, contact2) => contact1.FirstName.CompareTo(contact2.FirstName));
+                    contactList.Sort((contact1, contact2) => contact1.LastName.CompareTo(contact2.LastName));
+                    return contactList;
+                case 2:
+                    contactList.Sort((contact1, contact2) => contact1.City.CompareTo(contact2.City));
+                    return contactList;
+                case 3:
+                    contactList.Sort((contact1, contact2) => contact1.State.CompareTo(contact2.State));
+                    return contactList;
+                case 4:
+                    contactList.Sort((contact1, contact2) => contact1.Zip.CompareTo(contact2.Zip));
+                    return contactList;
+                default:
+                    return contactList;
+            }
+        }
+
+        /// <summary>
+        /// Sorts the data.
+        /// </summary>
+        public void SortData()
+        {
+            List<Contact> sortingData = SortingContactDetails();
+            foreach (var contacts in sortingData)
             {
                 Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
-                    + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
-                    "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                        + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
+                        "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
                 Console.WriteLine("-------------------------***********************---------------------");
             }
         }

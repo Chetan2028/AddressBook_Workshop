@@ -193,11 +193,27 @@ namespace AddressBook_Workshop
         }
 
         /// <summary>
+        /// Views the contact.
+        /// </summary>
+        public void ViewContact()
+        {
+            foreach (Contact contacts in contactList)
+            {
+                Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " +contacts.Address
+                    +"\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip+
+                    "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                Console.WriteLine("-----------***************************--------------");
+            }
+        }
+
+
+        /// <summary>
         /// Displays the menu.
         /// </summary>
         public void DisplayMenu()
         {
-            Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact ");
+            Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
+                "\nPress 4 to View Contact \nPress 5 to Exit");
         }
     }
 }

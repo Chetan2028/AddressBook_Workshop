@@ -229,7 +229,7 @@ namespace AddressBook_Workshop
             while (flag)
             {
                 Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
-                "\nPress 4 to View Contact \nPress 5 to Exit");
+                "\nPress 4 to View Contact \nPress 5 to Sort Contact Details \nPress 6 to Exit");
                 Console.WriteLine("Enter your choice");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
@@ -247,6 +247,9 @@ namespace AddressBook_Workshop
                         ViewContact();
                         break;
                     case 5:
+                        SortingContactDetails();
+                        break;
+                    case 6:
                         flag = false;
                         break;
                     default:
@@ -374,6 +377,23 @@ namespace AddressBook_Workshop
                         Console.WriteLine("-------------------------***********************---------------------");
                     }
                 });
+        }
+
+        /// <summary>
+        /// Sortings the contact details.
+        /// </summary>
+        public void SortingContactDetails()
+        {
+            contactList.Sort((contact1, contact2) => contact1.FirstName.CompareTo(contact2.FirstName));
+            contactList.Sort((contact1, contact2) => contact1.LastName.CompareTo(contact2.LastName));
+
+            foreach (var contacts in contactList)
+            {
+                Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
+                    + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
+                    "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                Console.WriteLine("-------------------------***********************---------------------");
+            }
         }
 
         /// <summary>

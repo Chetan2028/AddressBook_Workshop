@@ -19,6 +19,9 @@ namespace AddressBook_Workshop
                 case 2:
                     addressBook.EditContact();
                     break;
+                case 3:
+                    addressBook.DeleteContact();
+                    break;
                 default:
                     Console.WriteLine("Enter a valid choice");
                     break;

@@ -16,7 +16,8 @@ namespace AddressBook_Workshop
             INVALID_STATE,
             INVALID_ZIP,
             INVALID_PHONE_NUMBER,
-            INVALID_EMAIL
+            INVALID_EMAIL,
+            INVALID_ADDRESS_BOOK
         }
 
         public ExceptionType type;

@@ -11,6 +11,9 @@ namespace AddressBook_Workshop
 
         ContactValidator validator = new ContactValidator();
 
+        //Store Address Book in Dictionary
+        Dictionary<string, AddressBook> addressBookDictionary = new Dictionary<string, AddressBook>();
+
         /// <summary>
         /// Adds the contact.
         /// </summary>
@@ -95,7 +98,7 @@ namespace AddressBook_Workshop
                     }
                 }
             }
-            catch(AddressBookCustomException e)
+            catch (AddressBookCustomException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -167,7 +170,7 @@ namespace AddressBook_Workshop
                         break;
                 }
             }
-            catch(AddressBookCustomException e)
+            catch (AddressBookCustomException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -197,23 +200,153 @@ namespace AddressBook_Workshop
         /// </summary>
         public void ViewContact()
         {
-            foreach (Contact contacts in contactList)
+            if (contactList.Count != 0)
             {
-                Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " +contacts.Address
-                    +"\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip+
-                    "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
-                Console.WriteLine("-----------***************************--------------");
+                foreach (Contact contacts in contactList)
+                {
+                    Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
+                        + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
+                        "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                    Console.WriteLine("-----------***************************--------------");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No Contacts to display");
             }
         }
 
+        /// <summary>
+        /// Contacts the menu.
+        /// </summary>
+        public void ContactMenu()
+        {
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
+                "\nPress 4 to View Contact \nPress 5 to Exit");
+                Console.WriteLine("Enter your choice");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        AddContact();
+                        break;
+                    case 2:
+                        EditContact();
+                        break;
+                    case 3:
+                        DeleteContact();
+                        break;
+                    case 4:
+                        ViewContact();
+                        break;
+                    case 5:
+                        flag = false;
+                        break;
+                    default:
+                        Console.WriteLine("Enter a valid choice");
+                        break;
+                }
+            }
+        }
 
         /// <summary>
-        /// Displays the menu.
+        /// Gets the name of the address book.
         /// </summary>
-        public void DisplayMenu()
+        /// <returns></returns>
+        public void CreateAddressBook()
         {
-            Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
-                "\nPress 4 to View Contact \nPress 5 to Exit");
+            try
+            {
+                Console.WriteLine("Enter the name of Address Book you want to create");
+                string bookName = Console.ReadLine();
+                if (!addressBookDictionary.ContainsKey(bookName))
+                {
+                    AddressBook addressBook = new AddressBook();
+                    addressBookDictionary.Add(bookName, addressBook);
+                    addressBook.ContactMenu();
+                }
+                else
+                {
+                    throw new AddressBookCustomException(AddressBookCustomException.ExceptionType.INVALID_ADDRESS_BOOK, "Address With Such Name Already Exists");
+                }
+            }
+            catch (AddressBookCustomException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the existing book.
+        /// </summary>
+        /// <returns></returns>
+        public void AccessExistingBook()
+        {
+            Console.WriteLine("Enter the name of Address Book you want to access");
+            string existingBookName = Console.ReadLine();
+            if (addressBookDictionary.ContainsKey(existingBookName))
+            {
+                AddressBook addressBook = new AddressBook();
+                Console.WriteLine($"Welcome to {existingBookName} Address Book");
+                addressBookDictionary[existingBookName].ContactMenu();
+            }
+            else
+            {
+                Console.WriteLine("No Such Address Book Found");
+            }
+        }
+
+        /// <summary>
+        /// Views the address book.
+        /// </summary>
+        public void ViewAddressBook()
+        {
+            if (addressBookDictionary.Count != 0)
+            {
+                foreach (var addressBook in addressBookDictionary.Keys)
+                {
+                    Console.WriteLine(addressBook);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No Address Book to display");
+            }
+        }
+
+        /// <summary>
+        /// Addresses the book menu.
+        /// </summary>
+        public void AddressBookMenu()
+        {
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("Press 1 to Create Address Book \nPress 2 to Access Address Book \nPress 3 to View Address Book \nPress 4 to Exit");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        CreateAddressBook();
+                        break;
+                    case 2:
+                        AccessExistingBook();
+                        break;
+                    case 3:
+                        ViewAddressBook();
+                        break;
+                    case 4:
+                        flag = false;
+                        break;
+                    default:
+                        Console.WriteLine("Enter a valid choice");
+                        break;
+                }
+            }
         }
     }
 }
+

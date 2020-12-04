@@ -53,7 +53,11 @@ namespace AddressBook_Workshop
                 string email = Console.ReadLine();
                 validator.ValidateEmail(email);
 
-
+                bool result = validator.CheckForDuplicates(contactList, firstName, phoneNumber);
+                if (result)
+                {
+                    AddContact();
+                }
                 Contact contact = new Contact
                 {
                     FirstName = firstName,

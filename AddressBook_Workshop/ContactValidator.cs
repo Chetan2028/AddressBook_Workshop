@@ -24,7 +24,7 @@ namespace AddressBook_Workshop
         /// <exception cref="AddressBook_Workshop.AddressBookCustomException">Invalid First Name</exception>
         public void ValidateFirstName(string firstName)
         {
-            if (Regex.IsMatch(firstName,REGEX_FIRST_NAME))
+            if (Regex.IsMatch(firstName, REGEX_FIRST_NAME))
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace AddressBook_Workshop
         /// <exception cref="AddressBook_Workshop.AddressBookCustomException">Invalid Last Name</exception>
         public void ValidateLastName(string lastName)
         {
-            if (Regex.IsMatch(lastName,REGEX_LAST_NAME))
+            if (Regex.IsMatch(lastName, REGEX_LAST_NAME))
             {
                 return;
             }
@@ -151,6 +151,25 @@ namespace AddressBook_Workshop
             {
                 throw new AddressBookCustomException(AddressBookCustomException.ExceptionType.INVALID_EMAIL, "Invalid Email");
             }
+        }
+
+        /// <summary>
+        /// Checks for duplicates.
+        /// </summary>
+        /// <param name="contactList">The contact list.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        public bool CheckForDuplicates(List<Contact> contactList, string firstName, string phoneNumber)
+        {
+            for (int i = 0; i < contactList.Count; i++)
+            {
+                if (contactList[i].FirstName.Equals(firstName) && contactList[i].PhoneNumber.Equals(phoneNumber))
+                {
+                    Console.WriteLine("COntact Name already exists!! \nEnter your details once again");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AddressBook_Workshop
@@ -229,7 +230,8 @@ namespace AddressBook_Workshop
             while (flag)
             {
                 Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
-                "\nPress 4 to View Contact \nPress 5 to Sort Contact Details \nPress 6 to Exit");
+                "\nPress 4 to View Contact \nPress 5 to Sort Contact Details \nPress 6 to Write Contact Details into File " +
+                "\nPress 7 to Read Data From Text File \nPress 8 to Exit");
                 Console.WriteLine("Enter your choice");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
@@ -250,6 +252,12 @@ namespace AddressBook_Workshop
                         SortData();
                         break;
                     case 6:
+                        WriteContactIntoFile();
+                        break;
+                    case 7:
+                        ReadDataFromTextFile();
+                        break;
+                    case 8:
                         flag = false;
                         break;
                     default:
@@ -423,6 +431,49 @@ namespace AddressBook_Workshop
                         + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
                         "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
                 Console.WriteLine("-------------------------***********************---------------------");
+            }
+        }
+
+        /// <summary>
+        /// Writes the contact into file.
+        /// </summary>
+        public void WriteContactIntoFile()
+        {
+            try
+            {
+                Contact contacts;
+                string line;
+                string filePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\ContactFile.txt";
+
+                using(StreamWriter writer = File.AppendText(filePath))
+                {
+                    for (int i = 0; i < contactList.Count; i++)
+                    {
+                        contacts = contactList[i];
+                        line = contacts.FirstName + "\t" + contacts.LastName + "\t" + contacts.Address + "\t" + contacts.PhoneNumber
+                            + "\t" + contacts.State + "\t" + contacts.City + "\t" + contacts.Zip + "\t" + contacts.Email;
+
+                        writer.WriteLine(line);
+                    }
+                }
+            }
+            catch(IOException)
+            {
+                Console.WriteLine("File not found");
+            }
+        }
+
+        /// <summary>
+        /// Reads the data from text file.
+        /// </summary>
+        public void ReadDataFromTextFile()
+        {
+            string filePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\ContactFile.txt";
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                Console.WriteLine(line);
             }
         }
 

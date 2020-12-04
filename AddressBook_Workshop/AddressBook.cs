@@ -173,9 +173,31 @@ namespace AddressBook_Workshop
             }
         }
 
+        /// <summary>
+        /// Deletes the contact.
+        /// </summary>
+        public void DeleteContact()
+        {
+            Console.WriteLine("Enter contact's First Name");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("Enter contact's mobile Number");
+            string phoneNumber = Console.ReadLine();
+
+            foreach (Contact contacts in contactList)
+            {
+                if (contacts.FirstName.Equals(firstName) && contacts.PhoneNumber.Equals(phoneNumber))
+                {
+                    contactList.Remove(contacts);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Displays the menu.
+        /// </summary>
         public void DisplayMenu()
         {
-            Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact");
+            Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact ");
         }
     }
 }

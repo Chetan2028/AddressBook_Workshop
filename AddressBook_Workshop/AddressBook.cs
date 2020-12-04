@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using CsvHelper;
 
 namespace AddressBook_Workshop
 {
@@ -231,7 +233,8 @@ namespace AddressBook_Workshop
             {
                 Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
                 "\nPress 4 to View Contact \nPress 5 to Sort Contact Details \nPress 6 to Write Contact Details into File " +
-                "\nPress 7 to Read Data From Text File \nPress 8 to Exit");
+                "\nPress 7 to Read Data From Text File \nPress 8 to Write Data into CSV File \nPress 9 Read Data from CSV File" +
+                "\nPress 10 to Exit");
                 Console.WriteLine("Enter your choice");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
@@ -258,6 +261,12 @@ namespace AddressBook_Workshop
                         ReadDataFromTextFile();
                         break;
                     case 8:
+                        WriteDataIntoCSVFile(contactList);
+                        break;
+                    case 9:
+                        ReadDataFromCSVFile();
+                        break;
+                    case 10:
                         flag = false;
                         break;
                     default:
@@ -445,7 +454,7 @@ namespace AddressBook_Workshop
                 string line;
                 string filePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\ContactFile.txt";
 
-                using(StreamWriter writer = File.AppendText(filePath))
+                using (StreamWriter writer = File.AppendText(filePath))
                 {
                     for (int i = 0; i < contactList.Count; i++)
                     {
@@ -457,7 +466,7 @@ namespace AddressBook_Workshop
                     }
                 }
             }
-            catch(IOException)
+            catch (IOException)
             {
                 Console.WriteLine("File not found");
             }
@@ -474,6 +483,39 @@ namespace AddressBook_Workshop
             foreach (string line in lines)
             {
                 Console.WriteLine(line);
+            }
+        }
+
+        /// <summary>
+        /// Writes the data into CSV file.
+        /// </summary>
+        /// <param name="records">The records.</param>
+        public void WriteDataIntoCSVFile(List<Contact> records)
+        {
+            string filePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\contacts.csv";
+            using (var writer = new StreamWriter(filePath))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(records);
+            }
+        }
+
+        /// <summary>
+        /// Read Data from Csv File
+        /// </summary>
+        public void ReadDataFromCSVFile()
+        {
+            string filePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\contacts.csv";
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<Contact>();
+                foreach (Contact contacts in records)
+                {
+                    Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
+                        + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
+                        "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                }
             }
         }
 

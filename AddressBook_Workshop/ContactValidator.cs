@@ -17,6 +17,7 @@ namespace AddressBook_Workshop
         public const string REGEX_PHONE_NUMBER = "^[1-9][0-9]{9}$";
         public const string REGEX_EMAIL = "^[A-Za-z0-9]*[@][a-z]*[.][a-z]*";
 
+
         /// <summary>
         /// Validates the first name.
         /// </summary>

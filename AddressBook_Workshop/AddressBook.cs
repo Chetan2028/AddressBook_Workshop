@@ -322,6 +322,61 @@ namespace AddressBook_Workshop
         }
 
         /// <summary>
+        /// Searchings the by city.
+        /// </summary>
+        public void SearchingByCity()
+        {
+            Console.WriteLine("Please enter City name");
+            string searchCity = Console.ReadLine();
+            foreach (KeyValuePair<string, AddressBook> keyValuePair in addressBookDictionary)
+            {
+                Console.WriteLine("Name of the Address Book ----------> " + keyValuePair.Key);
+                AddressBook addressBook = keyValuePair.Value;
+                addressBook.SearchContactDetails(searchCity);
+            }
+        }
+
+        /// <summary>
+        /// Searchings the state of the by.
+        /// </summary>
+        public void SearchingByState()
+        {
+            Console.WriteLine("Please enter State name");
+            string searchState = Console.ReadLine();
+            foreach (KeyValuePair<string, AddressBook> keyValuePair in addressBookDictionary)
+            {
+                Console.WriteLine("Name of the Address Book --------->" + keyValuePair.Key);
+                AddressBook addressBook = keyValuePair.Value;
+                addressBook.SearchContactDetails(searchState);
+            }
+        }
+
+        /// <summary>
+        /// Searches the contact details by city.
+        /// </summary>
+        /// <param name="searchElement">The search city.</param>
+        public void SearchContactDetails(string searchElement)
+        {
+            contactList.ForEach(contacts =>
+                {
+                    if (contacts.City.Equals(searchElement))
+                    {
+                        Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
+                        + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
+                        "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                        Console.WriteLine("-------------------------***********************---------------------");
+                    }
+                    if (contacts.State.Equals(searchElement))
+                    {
+                        Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
+                        + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
+                        "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                        Console.WriteLine("-------------------------***********************---------------------");
+                    }
+                });
+        }
+
+        /// <summary>
         /// Addresses the book menu.
         /// </summary>
         public void AddressBookMenu()
@@ -329,7 +384,8 @@ namespace AddressBook_Workshop
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("Press 1 to Create Address Book \nPress 2 to Access Address Book \nPress 3 to View Address Book \nPress 4 to Exit");
+                Console.WriteLine("Press 1 to Create Address Book \nPress 2 to Access Address Book \nPress 3 to View Address Book" +
+                    " \nPress 4 to Search Contact by City \nPress 5 to Search Contacts by State \nPress 6 to exit");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -343,6 +399,12 @@ namespace AddressBook_Workshop
                         ViewAddressBook();
                         break;
                     case 4:
+                        SearchingByCity();
+                        break;
+                    case 5:
+                        SearchingByState();
+                        break;
+                    case 6:
                         flag = false;
                         break;
                     default:

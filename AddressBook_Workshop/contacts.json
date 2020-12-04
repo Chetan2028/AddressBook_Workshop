@@ -1,0 +1,22 @@
+[
+  {
+    "FirstName": "Chetan",
+    "LastName": "Malagoudar",
+    "Address": "Mahantesh Nagar",
+    "City": "Belgaum",
+    "State": "Karnataka",
+    "Zip": 590016,
+    "PhoneNumber": "8951604950",
+    "Email": "bmchetan2028@gmail.com"
+  },
+  {
+    "FirstName": "Abhilash",
+    "LastName": "Itnal",
+    "Address": "Srinagar",
+    "City": "Belgaum",
+    "State": "Karnataka",
+    "Zip": 596847,
+    "PhoneNumber": "7349497157",
+    "Email": "abhilash@gmail.com"
+  }
+]

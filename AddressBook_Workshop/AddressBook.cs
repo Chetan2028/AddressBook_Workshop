@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using CsvHelper;
+using Newtonsoft.Json;
 
 namespace AddressBook_Workshop
 {
@@ -234,7 +236,7 @@ namespace AddressBook_Workshop
                 Console.WriteLine("Press 1 to Add Contact \nPress 2 to Edit Contact \nPress 3 to Delete Contact " +
                 "\nPress 4 to View Contact \nPress 5 to Sort Contact Details \nPress 6 to Write Contact Details into File " +
                 "\nPress 7 to Read Data From Text File \nPress 8 to Write Data into CSV File \nPress 9 Read Data from CSV File" +
-                "\nPress 10 to Exit");
+                "\nPress 10 to Write into JSON File \nPress 11 to Exit");
                 Console.WriteLine("Enter your choice");
                 int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
@@ -267,6 +269,9 @@ namespace AddressBook_Workshop
                         ReadDataFromCSVFile();
                         break;
                     case 10:
+                        WriteDataIntoJSONFile();
+                        break;
+                    case 11:
                         flag = false;
                         break;
                     default:
@@ -515,6 +520,28 @@ namespace AddressBook_Workshop
                     Console.WriteLine("First Name : " + contacts.FirstName + "\nLast Name : " + contacts.LastName + "\nAddress : " + contacts.Address
                         + "\nCity : " + contacts.City + "\nState : " + contacts.State + "\nZip : " + contacts.Zip +
                         "\nPhoneNumber : " + contacts.PhoneNumber + "\nEmail : " + contacts.Email);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Write Data Into JSON File
+        /// </summary>
+        public void WriteDataIntoJSONFile()
+        {
+            string importFilePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\contacts.csv";
+            string exportFilePath = @"D:\C# Programs\AddressBook_Workshop\AddressBook_Workshop\contacts.json";
+
+            using (var reader = new StreamReader(importFilePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<Contact>().ToList();
+
+                JsonSerializer jsonSeriallize = new JsonSerializer();
+                using (var writer = new StreamWriter(exportFilePath))
+                using (JsonWriter jsonwriter = new JsonTextWriter(writer))
+                {
+                    jsonSeriallize.Serialize(jsonwriter, records);
                 }
             }
         }
